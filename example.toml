@@ -1,0 +1,36 @@
+poll_period = 2000
+min_change = 2
+max_change = 20
+
+[sensors]
+cpu = { hwmon_name = "zenpower", label = "Tctl" }
+gpu = { hwmon_name = "amdgpu", label = "edge" }
+
+[composites.case]
+inputs = ["cpu", "gpu"]
+mode = "max"
+
+[curves]
+cpu = ["25C/0%", "45C/50%", "60C/80%", "80C/90%", "85C/100%"]
+gpu = ["25C/0%", "45C/37%", "60C/50%", "80C/80%", "85C/100%"]
+case = ["25C/0%", "45C/33%", "60C/50%", "75C/90%", "85C/100%"]
+
+[fans.cpu]
+path = { hwmon_name = "it8688", index = 1 }
+input = "cpu"
+curve = "cpu"
+
+[fans.gpu]
+path = { hwmon_name = "amdgpu", index = 1 }
+input = "gpu"
+curve = "gpu"
+
+[fans.case_front]
+path = { hwmon_name = "it8688", index = 3 }
+input = "case"
+curve = "case"
+
+[fans.case_back]
+path = { hwmon_name = "it8688", index = 2 }
+input = "case"
+curve = "case"
